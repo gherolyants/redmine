@@ -373,6 +373,7 @@ ru:
   field_updated_on: Обновлено
   field_url: URL
   field_user: Пользователь
+  field_use_user_credentials: Использовать данные, предоставленные при логине
   field_value: Значение
   field_version: Версия
   field_watcher: Наблюдатель

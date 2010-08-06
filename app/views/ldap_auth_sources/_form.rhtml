@@ -11,6 +11,9 @@
 <p><label for="auth_source_port"><%=l(:field_port)%> <span class="required">*</span></label>
 <%= text_field 'auth_source', 'port', :size => 6 %> <%= check_box 'auth_source', 'tls'  %> LDAPS</p>
 
+<p><label for="auth_source_use_user_credentials"><%=l(:field_use_user_credentials)%></label>
+<%= check_box 'auth_source', 'use_user_credentials' %></p>
+
 <p><label for="auth_source_account"><%=l(:field_account)%></label>
 <%= text_field 'auth_source', 'account'  %></p>
 

@@ -33,7 +33,7 @@ class AuthSourceLdap < AuthSource
   
   def authenticate(login, password)
     return nil if login.blank? || password.blank?
-    attrs = get_user_dn(login)
+    attrs = get_user_dn(login, password)
     
     if attrs && attrs[:dn] && authenticate_dn(attrs[:dn], password)
       logger.debug "Authentication successful for '#{login}'" if logger && logger.debug?
@@ -98,10 +98,24 @@ class AuthSourceLdap < AuthSource
       initialize_ldap_con(dn, password).bind
     end
   end
+  
+  def build_ldap_connection_login(provided_login)
+    if self.account.include?('@')
+      "#{provided_login}@#{self.account.split('@')[1]}"
+    elsif self.account.include?('\\')
+      "#{self.account.split('\\')[0]}\\#{provided_login}"
+    else
+      provided_login
+    end
+  end
 
   # Get the user's dn and any attributes for them, given their login
-  def get_user_dn(login)
-    ldap_con = initialize_ldap_con(self.account, self.account_password)
+  def get_user_dn(login, password)
+    if self.use_user_credentials?
+	  ldap_con = initialize_ldap_con(build_ldap_connection_login(login), password)
+	else
+      ldap_con = initialize_ldap_con(self.account, self.account_password)
+	end
     login_filter = Net::LDAP::Filter.eq( self.attr_login, login ) 
     object_filter = Net::LDAP::Filter.eq( "objectClass", "*" ) 
     attrs = {}
