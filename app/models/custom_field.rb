@@ -62,7 +62,7 @@ class CustomField < ActiveRecord::Base
     casted = nil
     unless value.blank?
       case field_format
-      when 'string', 'text', 'list'
+      when 'string', 'text', 'list', 'url'
         casted = value
       when 'date'
         casted = begin; value.to_date; rescue; nil end
@@ -82,7 +82,7 @@ class CustomField < ActiveRecord::Base
   # Returns false, if the custom field can not be used for sorting.
   def order_statement
     case field_format
-      when 'string', 'text', 'list', 'date', 'bool'
+      when 'string', 'text', 'list', 'date', 'bool', 'url'
         # COALESCE is here to make sure that blank and NULL values are sorted equally
         "COALESCE((SELECT cv_sort.value FROM #{CustomValue.table_name} cv_sort" + 
           " WHERE cv_sort.customized_type='#{self.class.customized_class.name}'" +

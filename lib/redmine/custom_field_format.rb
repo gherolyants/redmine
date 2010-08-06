@@ -30,20 +30,25 @@ module Redmine
       self.order = options[:order]
     end
 
-    def format(value)
-      send "format_as_#{name}", value
+    def format(value, custom_field)
+      send "format_as_#{name}", value, custom_field
     end
 
-    def format_as_date(value)
+    def format_as_date(value, custom_field)
       begin; format_date(value.to_date); rescue; value end
     end
 
-    def format_as_bool(value)
+    def format_as_bool(value, custom_field)
       l(value == "1" ? :general_text_Yes : :general_text_No)
     end
+	
+	def format_as_url(value, custom_field)
+		#ActiveRecord::Base.logger.error "Found custom field '#{custom_field}'"
+		custom_field.pattern.gsub(/\$\{value\}/, value)
+	end
 
     ['string','text','int','float','list'].each do |name|
-      define_method("format_as_#{name}") {|value|
+      define_method("format_as_#{name}") {|value, custom_field|
         return value
       }
     end
@@ -87,11 +92,11 @@ module Redmine
         }
       end
 
-      def format_value(value, field_format)
+      def format_value(value, custom_field)
         return "" unless value && !value.empty?
 
-        if format_type = find_by_name(field_format)
-          format_type.format(value)
+        if format_type = find_by_name(custom_field.field_format)
+          format_type.format(value, custom_field)
         else
           value
         end

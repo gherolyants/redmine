@@ -92,16 +92,34 @@ module CustomFieldsHelper
   # Return a string used to display a custom value
   def show_value(custom_value)
     return "" unless custom_value
-    format_value(custom_value.value, custom_value.custom_field.field_format)
+    format_value(custom_value.value, custom_value.custom_field)
+  end
+  
+  # Return an html used to display a custom value
+  def show_value_html(custom_value)
+    return "" unless custom_value
+    format_value_html(custom_value.value, custom_value.custom_field)
   end
   
   # Return a string used to display a custom value
-  def format_value(value, field_format)
-    Redmine::CustomFieldFormat.format_value(value, field_format) # Proxy
+  def format_value(value, custom_field)
+    Redmine::CustomFieldFormat.format_value(value, custom_field) # Proxy
+  end
+  
+  # Return an html used to display a custom value
+  def format_value_html(value, custom_field)
+    field_format = Redmine::CustomFieldFormat.find_by_name(custom_field.field_format)
+    case field_format.name
+      when "url"
+        content_tag(:a, value, :href => format_value(value, custom_field))
+      else
+        h(format_value(value, custom_field))
+    end
   end
 
   # Return an array of custom field formats which can be used in select_tag
   def custom_field_formats_for_select
     Redmine::CustomFieldFormat.as_select
   end
+  
 end

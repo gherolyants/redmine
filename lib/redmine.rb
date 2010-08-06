@@ -40,6 +40,7 @@ Redmine::CustomFieldFormat.map do |fields|
   fields.register Redmine::CustomFieldFormat.new('list', :label => :label_list, :order => 5)
   fields.register Redmine::CustomFieldFormat.new('date', :label => :label_date, :order => 6)
   fields.register Redmine::CustomFieldFormat.new('bool', :label => :label_boolean, :order => 7)
+  fields.register Redmine::CustomFieldFormat.new('url', :label => :label_url, :order => 8)
 end
 
 # Permissions

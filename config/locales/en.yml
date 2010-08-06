@@ -208,6 +208,7 @@ en:
   field_updated_on: Updated
   field_field_format: Format
   field_is_for_all: For all projects
+  field_pattern: Pattern
   field_possible_values: Possible values
   field_regexp: Regular expression
   field_min_length: Minimum length
@@ -492,6 +493,7 @@ en:
   label_boolean: Boolean
   label_string: Text
   label_text: Long text
+  label_url: Link
   label_attribute: Attribute
   label_attribute_plural: Attributes
   label_download: "{{count}} Download"
@@ -868,6 +870,7 @@ en:
   text_email_delivery_not_configured: "Email delivery is not configured, and notifications are disabled.\nConfigure your SMTP server in config/email.yml and restart the application to enable them."
   text_repository_usernames_mapping: "Select or update the Redmine user mapped to each username found in the repository log.\nUsers with the same Redmine and repository username or email are automatically mapped."
   text_diff_truncated: '... This diff was truncated because it exceeds the maximum size that can be displayed.'
+  text_custom_field_pattern_info: 'Use ${value} to insert a field value into template'
   text_custom_field_possible_values_info: 'One line for each value'
   text_wiki_page_destroy_question: "This page has {{descendants}} child page(s) and descendant(s). What do you want to do?"
   text_wiki_page_nullify_children: "Keep child pages as root pages"

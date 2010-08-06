@@ -351,6 +351,7 @@ ru:
   field_parent_issue: Родительская задача
   field_password_confirmation: Подтверждение
   field_password: Пароль
+  field_pattern: Pattern
   field_port: Порт
   field_possible_values: Возможные значения
   field_priority: Приоритет
@@ -678,6 +679,7 @@ ru:
   label_subproject_plural: Подпроекты
   label_subtask_plural: Подзадачи
   label_text: Длинный текст
+  label_url: Ссылка
   label_theme: Тема
   label_this_month: этот месяц
   label_this_week: на этой неделе
@@ -898,6 +900,7 @@ ru:
   text_caracters_maximum: "Максимум {{count}} символов(а)."
   text_caracters_minimum: "Должно быть не менее {{count}} символов."
   text_comma_separated: Допустимы несколько значений (через запятую).
+  text_custom_field_pattern_info: 'Используйте ${value}, чтобы вставить значение поля в шаблон'
   text_custom_field_possible_values_info: 'По одному значению в каждой строке'
   text_default_administrator_account_changed: Учетная запись администратора по умолчанию изменена
   text_destroy_time_entries_question: Вы собираетесь удалить {{hours}} часа(ов), прикрепленных за этой задачей.

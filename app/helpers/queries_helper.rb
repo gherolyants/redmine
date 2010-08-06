@@ -59,6 +59,8 @@ module QueriesHelper
       l(:general_text_No)
     when 'Issue'
       link_to_issue(value, :subject => false)
+	when 'CustomValue'
+	  show_value_html(value)
     else
       h(value)
     end

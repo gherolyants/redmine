@@ -79,7 +79,7 @@ module IssuesHelper
     n = 0
     ordered_values.compact.each do |value|
       s << "</tr>\n<tr>\n" if n > 0 && (n % 2) == 0
-      s << "\t<th>#{ h(value.custom_field.name) }:</th><td>#{ simple_format_without_paragraph(h(show_value(value))) }</td>\n"
+      s << "\t<th>#{ h(value.custom_field.name) }:</th><td>#{ simple_format_without_paragraph(show_value_html(value)) }</td>\n"
       n += 1
     end
     s << "</tr>\n"
@@ -127,8 +127,8 @@ module IssuesHelper
       custom_field = CustomField.find_by_id(detail.prop_key)
       if custom_field
         label = custom_field.name
-        value = format_value(detail.value, custom_field.field_format) if detail.value
-        old_value = format_value(detail.old_value, custom_field.field_format) if detail.old_value
+        value = (no_html ? format_value(detail.value, custom_field) : format_value_html(detail.value, custom_field)) if detail.value
+        old_value = (no_html ? format_value(detail.old_value, custom_field) : format_value_html(detail.old_value, custom_field)) if detail.old_value
       end
     when 'attachment'
       label = l(:label_attachment)
@@ -141,13 +141,13 @@ module IssuesHelper
     
     unless no_html
       label = content_tag('strong', label)
-      old_value = content_tag("i", h(old_value)) if detail.old_value
-      old_value = content_tag("strike", old_value) if detail.old_value and (!detail.value or detail.value.empty?)
+      old_value = content_tag("i", (detail.property == 'cf' ? old_value : h(old_value))) if detail.old_value
+      old_value = content_tag("strike", old_value) if detail.old_value and (!detail.value or (String == detail.value.class and detail.value.empty?))
       if detail.property == 'attachment' && !value.blank? && a = Attachment.find_by_id(detail.prop_key)
         # Link to the attachment if it has not been removed
         value = link_to_attachment(a)
       else
-        value = content_tag("i", h(value)) if value
+        value = content_tag("i", (detail.property == 'cf' ? value : h(value))) if value
       end
     end
     
